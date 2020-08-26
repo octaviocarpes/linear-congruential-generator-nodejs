@@ -20,12 +20,12 @@ readline.question('Input seed:\n', input => {
 function generateNumbers(seed) {
   if (iterator === 1000) return;
 
-  let a = 4;
-  let c = 7;
-  const M = 1;
+  let a = 1.24542359784234;
+  let c = 0.42193923598712;
+  const M = 10000;
   let X = ((a * seed) + c) % M;
-  const num = Number(X);
-  appendFile(num.toFixed(3));
+  const num = Number(X) / M;
+  appendFile(num.toFixed(10));
 
   iterator++;
   generateNumbers(X);
