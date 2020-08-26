@@ -12,6 +12,7 @@ const readline = require('readline').createInterface({
 readline.question('Input seed:\n', input => {
   seed = input
   console.log(`Generating random numbers with seed: ${seed}`);
+  fs.unlink('numbers.csv', (err) => console.log(err))
   generateNumbers(seed);
   readline.close();
 });
@@ -19,11 +20,12 @@ readline.question('Input seed:\n', input => {
 function generateNumbers(seed) {
   if (iterator === 1000) return;
 
-  const a = 4;
-  const c = 7;
-  const M = 1000;
-  const X = ((a * seed) + c) % M;
-  appendFile(X, iterator);
+  let a = 4;
+  let c = 7;
+  const M = 1;
+  let X = ((a * seed) + c) % M;
+  const num = Number(X);
+  appendFile(num.toFixed(3));
 
   iterator++;
   generateNumbers(X);
@@ -32,8 +34,8 @@ function generateNumbers(seed) {
 // if iterator === 0
 // use seed => X = (a * seed + c) % M
 
-function appendFile(data, i) {
-  fs.appendFile('numbers.csv', `${data}, ${i}\n`, function (err) {
+function appendFile(data) {
+  fs.appendFile('numbers.csv', `${data}\n`, function (err) {
     if (err) return console.log(err);
   });
 }
